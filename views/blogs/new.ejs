@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate')%>
+
+    <div class="row">
+        <h1 class="text-center">New Blog</h1>
+        <div class="col-6 offset-3">
+            <form action="/blogs" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="blog[title]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">content</label>
+                    <textarea class="form-control" type="text" id="description" name="blog[content]"
+                        required></textarea>
+                    <div class="feedback valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Insert the Blog Images</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple name="image" required>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Post</button>
+                </div>
+            </form>
+            <a href="/blogs">All Blogs</a>
+
+        </div>
+    </div>
+    <script>
+        var check = function () {
+            my_textarea = document.getElementById('description');
+            div = document.querySelector('.feedback')
+            if (my_textarea.value === "") {
+                div.innerHTML = "";
+            }
+
+            if (/\b(?=\w)(asshole|fucking|fuck)\b(?!\w)/i.test(my_textarea.value)) {
+                alert("Dont't use bad words")
+                div.innerHTML = "";
+                //my_textarea.value = "";
+            }
+            // else {
+            //     div.classList.remove('invalid-feedback')
+            //     div.classList.add('valid-feedback')
+            //     div.innerHTML = "Looks Good";
+            // }
+        }
+        document.getElementById('description').addEventListener("keyup", check);
+    </script>

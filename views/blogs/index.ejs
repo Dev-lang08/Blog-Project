@@ -1,0 +1,32 @@
+<% layout('layouts/boilerplate')%>
+    <h1>All Blogs</h1>
+    <div>
+        <a href="/blogs/new">Add Blog</a>
+    </div>
+    <% let c=0 %>
+        <% for (let blog of blogs){%>
+            <% %>
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-fluid" alt="" src="<%= usernames[c].author.profilePicture.url%>">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= blog.title %>
+                                </h5>
+                                <p class="card-text">
+                                    Author : <%= usernames[c].author.username%>
+                                </p>
+                                <p class="card-text">
+                                    <%= blog.content %>
+                                </p>
+                                <a class="btn btn-primary" href="/blogs/<%=blog._id%>">View Blog by:
+                                    <%=usernames[c++].author.username%>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }%>
