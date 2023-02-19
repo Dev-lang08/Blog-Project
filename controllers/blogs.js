@@ -1,5 +1,5 @@
 const Blog = require('../models/blog');
-const { cloudinary } = require('../Cloudinary/index')
+const { cloudinary } = require('../cloudinary/index')
 
 module.exports.index = async (req, res) => {
     const blogs = await Blog.find({});
