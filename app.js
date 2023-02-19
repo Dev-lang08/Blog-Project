@@ -87,7 +87,7 @@ app.use('/blogs', blogRoutes);
 app.use('/blogs/:id/comments', commentRoutes);
 
 app.get('/', (req, res) => {
-    res.send('home');
+    res.render('home');
 })
 
 
