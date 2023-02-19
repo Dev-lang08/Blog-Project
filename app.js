@@ -21,8 +21,7 @@ const userRoutes = require('./routes/users');
 
 const MongoStore = require('connect-mongo');
 
-// const dbUrl = process.env.DB_URL
-const dbUrl = 'mongodb://localhost:27017/blog'
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/blog'
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
@@ -38,9 +37,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const secret = process.env.SECRET || 'BlogProject!'
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
-    secret: 'BlogProject!',
+    secret,
     touchAfter: 24 * 3600
 })
 
@@ -50,7 +51,8 @@ store.on('error', function (e) {
 
 const sessionConfig = {
     store,
-    secret: 'BlogProject!',
+    name: 'session',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
