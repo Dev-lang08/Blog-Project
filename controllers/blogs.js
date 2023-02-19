@@ -71,11 +71,14 @@ module.exports.editBlog = async (req, res) => {
     blog.date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     blog.time = `${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes()}`;
     await blog.save();
-    if (req.body.deleteImages.length > 1) {
-        for (let filename of req.body.deleteImages) {
-            await cloudinary.uploader.destroy(filename);
+    //console.log(req.body.deleteImages)
+    if (req.body.deleteImages != undefined) {
+        if (req.body.deleteImages.length > 0) {
+            for (let filename of req.body.deleteImages) {
+                await cloudinary.uploader.destroy(filename);
+            }
+            await blog.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
         }
-        await blog.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
     }
     blog = await Blog.findByIdAndUpdate(id, { ...req.body.blog });
     req.flash('success', "Successfully updated the Blog!");
